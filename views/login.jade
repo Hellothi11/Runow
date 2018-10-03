@@ -1,0 +1,24 @@
+extends layout
+
+block head
+  link(rel='stylesheet', href='/stylesheets/login.css')
+
+block content
+  .main.container
+    .login-container
+      h1.display-4.m-b-2 Sign In
+
+      form(method='POST' action='/users/login')
+        table.login-input
+          tr
+            td
+              input#name.form-control.login-input(type='text', placeholder='Username' name='username')
+          tr
+            td
+              input#pw.form-control.login-input(type='password' name='password', placeholder='Password')
+          tr
+            td
+              button.btn.btn-primary(type='submit') Sign in
+          tr
+            td
+              a(href="/users/register") Don't have account

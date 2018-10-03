@@ -1,19 +1,42 @@
-var mongoose = require("mongoose");
+let mongoose = require("mongoose");
+let bcrypt   = require('bcrypt-nodejs');
 
-var UserSchema = new mongoose.Schema({
-  email: String,
-  social_id: {
-    type: String,
-    index: true
+let UserSchema = new mongoose.Schema({
+  local            : {
+    username     : String,
+    email        : String,
+    password     : String
   },
-  is_facebook: Boolean,
-  name: String,
-  number_of_keys: Number,
-  last_activity: Date,
-  level: Number
+  facebook         : {
+    id           : String,
+    token        : String,
+    name         : String,
+    email        : String
+  },
+  twitter          : {
+    id           : String,
+    token        : String,
+    displayName  : String,
+    username     : String
+  },
+  google           : {
+    id           : String,
+    token        : String,
+    email        : String,
+    name         : String
+  }
 });
 
-var User = mongoose.model('User', UserSchema);
+// generating a hash
+UserSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8))
+};
+
+UserSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.local.password)
+}
+
+let User = mongoose.model('User', UserSchema);
 
 module.exports = {
   User: User
