@@ -2,14 +2,16 @@ let express = require('express');
 let router = express.Router();
 let controller = require('../controllers/users.js')
 
-router.get('/login', function(req, res) {
-  res.render('login', { title: 'Sign In'})
+router.get('/signin', function(req, res) {
+  res.render('signin', { title: 'Sign In'})
 });
 
-router.post('/login', controller.postLogin);
+router.post('/signin', controller.postSignin);
 
-router.get('/register', function(req, res) {
-  res.render('register', { title: 'Register'})
+router.get('/signup', function(req, res) {
+  res.render('signup', { title: 'Sign up'})
 });
+
+router.post('/signup', controller.postSignup);
 
 module.exports = router;

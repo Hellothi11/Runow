@@ -1,10 +1,10 @@
-.login-container {
+.signin-container {
     margin: auto;
     width: 300px;
     border: 3px solid green;
     padding: 10px;
 }
 
-.login-input {
+.signin-input {
     width: 100%
 }
