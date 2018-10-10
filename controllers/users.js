@@ -1,8 +1,8 @@
 
-module.exports.postSignIn = function(req, res) {
+module.exports.postSignin = function(req, res) {
     res.send("not implemented")
-}
+};
 
 module.exports.postSignup = function(req, res) {
-    res.send("not implemented")
-}
+    res.redirect('/home');
+};

@@ -1,11 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var createError   = require('http-errors');
+var express       = require('express');
+var path          = require('path');
+var cookieParser  = require('cookie-parser');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var logger        = require('morgan');
+var flash         = require('connect-flash');
+var session       = require('express-session');
+var passport      = require('passport');
+
+var indexRouter   = require('./routes/index');
+var usersRouter   = require('./routes/users');
+const MongoStore  = require('connect-mongo')(session);
+let mongoose      = require('./config/db-config')
 
 var app = express();
 
@@ -37,5 +43,21 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+// required for passport
+app.use(session({
+  secret: "hello",
+  name: "session_id",
+  store: new MongoStore({ mongooseConnection: mongoose.connection }), // connect-mongo session store
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+})); // session secret
+
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+require('./config/passport-config')(passport);
 
 module.exports = app;

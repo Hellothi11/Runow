@@ -8,7 +8,6 @@ var app = require('../app');
 var debug = require('debug')('runow:server');
 var http = require('http');
 var db = require('../config/db-config');
-let passport = require('../config/passport-config')
 
 /**
  * Get port from environment and store in Express.
