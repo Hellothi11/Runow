@@ -10,11 +10,14 @@ router.get('/signin', function(req, res) {
 router.post('/signin', controller.postSignin);
 
 router.get('/signup', function(req, res) {
-  res.render('signup', { title: 'Sign up'})
+  console.log(req.flash('error'));
+  res.render('signup', { title: 'Sign up', message: req.flash('error')})
 });
 
-router.post('/signup', passport.authenticate('local-signup', { failureRedirect: '/error' }),
-  controller.postSignup
-);
+router.post('/signup', passport.authenticate('local-signup', { 
+  successRedirect : '/home', 
+  failureRedirect: '/users/signup', 
+  failureFlash : true 
+}));
 
 module.exports = router;
