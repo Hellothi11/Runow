@@ -8,4 +8,6 @@ router.get('/add', (req, res, next) => {
 });
 router.post('/add', controller.add);
 router.get('/delete/:id', controller.delete);
+router.get('/edit/:id', controller.getEdit);
+router.post('/edit/:id', controller.edit);
 module.exports = router;

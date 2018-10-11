@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .main.container
+    h1.display-4.m-b-2 Edit book
+
+    form(method='POST' action='/books/edit/#{book.id}' )
+        table.signin-input
+          tr
+            td
+              input#name.form-control(type='text', placeholder='Name', name='name', value='#{book.name}')
+          tr
+            td
+              input#pw.form-control(type='text', name='description', placeholder='Description', value='#{book.description}')
+          tr
+            td
+              button.btn.btn-primary(type='submit') Edit

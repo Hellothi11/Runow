@@ -23,11 +23,38 @@ module.exports.add = function(req, res, next) {
     });
 };
 
+module.exports.getEdit = function(req, res, next) {
+    Book.findById(req.params.id, (err, data) => {
+        if (err)
+            res.render('error', {error: err});
+        else {
+            res.render('edit_book', {book: data});
+        }
+    });
+};
+
+module.exports.edit = function(req, res, next) {
+    Book.findById(req.params.id, (err, data) => {
+        if (err)
+            res.render('/books/edit/' + req.params.id, {error: err});
+        else {
+            data.set({name: req.body.name, description: req.body.description});
+            data.save((error, updatedBook) => {
+                if (err) {
+                    res.render('/books/edit/' + req.params.id, {error: err});
+                } else {
+                    res.redirect('/books/list');
+                }
+            })
+        }
+    });
+};
+
 module.exports.delete = function(req, res, next) {
     Book.findOneAndRemove(req.params.id, req.body, function(err,data)
     {
         if (err)
-            res.render('list_book', {error: err});
+            res.render('error', {error: err});
         else 
             res.redirect('/books/list');
     });

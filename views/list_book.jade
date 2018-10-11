@@ -7,4 +7,5 @@ block content
             a(href='/books/add') Add
             each book in books
                 p= book.name + " --- "
+                    a(href='/books/edit/' + book.id) Edit
                     a(href='/books/delete/' + book.id) Delete
