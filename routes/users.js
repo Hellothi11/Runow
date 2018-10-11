@@ -4,20 +4,27 @@ let controller = require('../controllers/users.js')
 let passport = require('passport');
 
 router.get('/signin', function(req, res) {
-  res.render('signin', { title: 'Sign In'})
+  let msg = req.flash('error')[0];
+  console.log("Sign in error: " + msg);
+  res.render('signin', { title: 'Sign In', message: msg});
 });
 
-router.post('/signin', controller.postSignin);
+router.post('/signin', passport.authenticate('local-signin', {
+  successRedirect : '/books/list', 
+  failureRedirect: '/users/sigin', 
+  failureFlash : true
+}));
 
 router.get('/signup', function(req, res) {
-  console.log(req.flash('error'));
-  res.render('signup', { title: 'Sign up', message: req.flash('error')})
+  let msg = req.flash('error')[0];
+  console.log("Sign up error: " + msg);
+  res.render('signup', { title: 'Sign up', message: msg });
 });
 
-router.post('/signup', passport.authenticate('local-signup', { 
-  successRedirect : '/home', 
-  failureRedirect: '/users/signup', 
-  failureFlash : true 
+router.post('/signup', passport.authenticate('local-signup', {
+  successRedirect : '/home',
+  failureRedirect: '/users/signup',
+  failureFlash : true
 }));
 
 module.exports = router;

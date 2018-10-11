@@ -8,6 +8,8 @@ block content
     .signin-container
       h1.display-4.m-b-2 Sign In
 
+      h3.error #{message}
+      
       form(method='POST' action='/users/signin')
         table.signin-input
           tr

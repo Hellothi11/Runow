@@ -8,10 +8,12 @@ var flash         = require('connect-flash');
 var session       = require('express-session');
 var passport      = require('passport');
 
+const MongoStore  = require('connect-mongo')(session);
+let mongoose      = require('./databases/db-config');
+require('./authentication').init(passport);
 var indexRouter   = require('./routes/index');
 var usersRouter   = require('./routes/users');
-const MongoStore  = require('connect-mongo')(session);
-let mongoose      = require('./config/db-config')
+var booksRouter   = require('./routes/books');
 
 var app = express();
 
@@ -34,15 +36,13 @@ app.use(session({
   saveUninitialized: true
 })); // session secret
 
-require('./config/passport-config')(passport);
-
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/books', booksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

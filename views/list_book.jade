@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  .main.container
+      h1.display-4.m-b-2 List books
+        p
+            a(href='/books/add') Add
+            each book in books
+                p= book.name + " --- "
+                    a(href='/books/delete/' + book.id) Delete
